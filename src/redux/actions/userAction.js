@@ -8,7 +8,9 @@ export const SET_SHIPPING_COUNTRY = "SET_SHIPPING_COUNTRY";
 export const SET_STATE = "SET_STATE";
 export const SET_SHIP_STATE = "SET_SHIP_STATE";
 export const GET_CURRENT_ADDRESS = "GET_CURRENT_ADDRESS";
-Geocode.setApiKey(window._env_.APP_MAP_API_KEY);
+if (window._env_ && window._env_.APP_MAP_API_KEY) {
+  Geocode.setApiKey(window._env_.APP_MAP_API_KEY);
+}
 Geocode.setLanguage("en");
 export const setUser = (data) => {
     return async dispatch => {
@@ -37,9 +39,15 @@ export const getShippingCountry = (lang) => {
         try {
             let action = constant.ACTION.SHIPPING_COUNTRY + '?store=' + window._env_.APP_MERCHANT + '&lang=' + lang;
             let response = await WebService.get(action);
+            const seen = new Set();
+            const unique = (Array.isArray(response) ? response : []).filter((c) => {
+              if (!c || seen.has(c.code)) return false;
+              seen.add(c.code);
+              return true;
+            });
             dispatch({
                 type: SET_SHIPPING_COUNTRY,
-                payload: response
+                payload: unique
             });
         } catch (error) {
         }

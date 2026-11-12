@@ -12,33 +12,41 @@ import WebService from '../../util/webService';
 import constant from '../../util/constant';
 import { setLoader } from "../../redux/actions/loaderActions";
 import { multilanguage } from "redux-multilanguage";
-const ProductDetails = ({ strings, location, productID, currentLanguageCode, setLoader, defaultStore }) => {
+const ProductDetails = ({ strings, location, match, productID, currentLanguageCode, setLoader, defaultStore }) => {
   const { pathname } = location;
+  const productCode = match && match.params && match.params.id;
   const [productDetails, setProductDetails] = useState();
   const [productReview, setProductReview] = useState([]);
 
   useEffect(() => {
     getProductDetails();
-    getReview();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProductDetails = async () => {
     setLoader(true)
-    let action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
+    let action;
+    if (productCode) {
+      action = constant.ACTION.PRODUCTS + 'slug/' + productCode + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
+    } else {
+      action = constant.ACTION.PRODUCTS + productID + '?lang=' + currentLanguageCode + '&store=' + defaultStore;
+    }
     try {
       let response = await WebService.get(action);
       if (response) {
         console.log(response)
         setProductDetails(response)
+        getReview(response.id)
         setLoader(false)
       }
     } catch (error) {
       setLoader(false)
     }
   }
-  const getReview = async () => {
-    let action = constant.ACTION.PRODUCTS + productID + '/reviews?store=' + defaultStore;
+  const getReview = async (id) => {
+    const rid = id || productID;
+    if (!rid) return;
+    let action = constant.ACTION.PRODUCTS + rid + '/reviews?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
       if (response) {

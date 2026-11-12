@@ -252,13 +252,13 @@ const Cart = ({
                             return (
                               <tr key={key}>
                                 <td className="product-thumbnail">
-                                  <Link to={"/product/" + cartItem.description.friendlyUrl} >
+                                  <Link to={"/product/" + (cartItem.description.friendlyUrl || cartItem.sku)} >
                                     <img className="img-fluid" src={defaultImage(cartItem)} alt="" />
                                   </Link>
                                 </td>
 
                                 <td className="product-name">
-                                  <Link to={"/product/" + cartItem.description.friendlyUrl}>
+                                  <Link to={"/product/" + (cartItem.description.friendlyUrl || cartItem.sku)}>
                                     {cartItem.description.name}
                                   </Link>
                                 </td>
