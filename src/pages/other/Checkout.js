@@ -543,10 +543,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
         "shippingQuote": selectedOptions,
         "currency": merchant.currency,
         "payment": {
-          "paymentType": "CREDITCARD",
+          "paymentType": window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? "MONEYORDER" : "CREDITCARD",
           "transactionType": "CAPTURE",
-          "paymentModule": "stripe",
-          "paymentToken": result.token,
+          "paymentModule": window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? "moneyorder" : "stripe",
+          ...(window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? {} : { "paymentToken": (result && result.token) }),
           "amount": shippingQuote[shippingQuote.length - 1].value
         }
       }
@@ -606,10 +606,10 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
         "shippingQuote": selectedOptions,
         "currency": merchant.currency,
         "payment": {
-          "paymentType": "CREDITCARD",
+          "paymentType": window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? "MONEYORDER" : "CREDITCARD",
           "transactionType": "CAPTURE",
-          "paymentModule": "stripe",
-          "paymentToken": result.token,
+          "paymentModule": window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? "moneyorder" : "stripe",
+          ...(window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' ? {} : { "paymentToken": (result && result.token) }),
           "amount": shippingQuote[shippingQuote.length - 1].value
         },
         "customer": customer
@@ -1258,6 +1258,19 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                         background: none;
                         background-color: #fb799c;"className="btn-hover">Pay now</button>
                       </form>'></iframe>
+                      }
+                      {
+                        window._env_.APP_PAYMENT_TYPE === 'MONEYORDER' &&
+                        <div className="payment-method mt-25">
+                          <div className="login-toggle-btn mb-20">
+                            <input type="checkbox" name={paymentForm.isAgree.name} ref={register(paymentForm.isAgree.validate)} onChange={onAgreement}/>
+                            <label className="ml-10 ">{strings["I agree with the terms and conditions"]}</label>
+                            {errors[paymentForm.isAgree.name] && <p className="error-msg">{errors[paymentForm.isAgree.name].message}</p>}
+                          </div>
+                          <div className="place-order mt-20">
+                            <button type="button" onClick={handleSubmit((d) => onPayment(d, null))} className="btn-hover">{strings["Place your order"]}</button>
+                          </div>
+                        </div>
                       }
                           </div>
                   </div>

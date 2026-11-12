@@ -11,7 +11,7 @@ import 'swiper/swiper.scss'
 const ProductImageGallery = ({ product }) => {
   const [gallerySwiper, getGallerySwiper] = useState(null);
   const [thumbnailSwiper, getThumbnailSwiper] = useState(null);
-  const [currentImage, setCurrentImage] = useState(product.images[0].imageUrl)
+  const [currentImage, setCurrentImage] = useState(product.images && product.images.length ? product.images[0].imageUrl : '')
 
   // effect for swiper slider synchronize
   useEffect(() => {
@@ -36,7 +36,7 @@ const ProductImageGallery = ({ product }) => {
   };
 
   const thumbnailSwiperParams = {
-    getSwiper: product.images.length > 4 && getThumbnailSwiper,
+    getSwiper: (product.images && product.images.length > 4) && getThumbnailSwiper,
     spaceBetween: 10,
     slidesPerView: 4,
     loopedSlides: 4,
