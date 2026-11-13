@@ -98,16 +98,7 @@ const paymentForm = {
   },
   phone: {
     name: "phone",
-    validate: {
-      required: {
-        value: true,
-        message: "Phone number is required"
-      },
-      minLength: {
-        value: 10,
-        message: "Enter a 10-digit number"
-      }
-    }
+    validate: {}
   },
   email: {
     name: "email",
