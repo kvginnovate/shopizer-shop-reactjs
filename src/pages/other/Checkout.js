@@ -512,22 +512,17 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
       history.push("/");
     }
 
+    // In MONEYORDER mode no card element is rendered, so skip Stripe token creation
+    if (window._env_.APP_PAYMENT_TYPE === 'MONEYORDER') {
+      onPayment(data, null)
+      return
+    }
     let card = elements.getElement(CardElement);
-    // console.log(card);
-    // let ownerInfo = {
-    //   owner: {
-    //     name: data.firstName + ' ' + data.lastName,
-    //     phone: data.phone,
-    //     email: data.email
-    //   },
-    // };
     const result = await stripe.createToken(card);
-    // stripe.createSource(card, ownerInfo).then(function (result) {
     if (result.error) {
       setLoader(false)
       addToast(result.error.message, { appearance: "error", autoDismiss: true });
     } else {
-      // console.log(result);
       onPayment(data, result.token.id)
     }
     // });
