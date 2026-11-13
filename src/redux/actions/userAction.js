@@ -58,7 +58,7 @@ export const getShippingCountry = (lang) => {
 export const getState = (code) => {
     return async dispatch => {
         try {
-            console.log('Calling get state');
+            
             let action = constant.ACTION.ZONES + '?code=' + code;
             let response = await WebService.get(action);
             dispatch({
@@ -91,7 +91,7 @@ export const getCurrentLocation = () => {
                 // console.log(position)
                 dispatch(getCurrentAddress(position.coords.latitude, position.coords.longitude))
             }, (error) => {
-                console.log(error)
+                
             })
         }
     }

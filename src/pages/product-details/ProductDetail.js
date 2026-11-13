@@ -34,7 +34,7 @@ const ProductDetails = ({ strings, location, match, productID, currentLanguageCo
     try {
       let response = await WebService.get(action);
       if (response) {
-        console.log(response)
+        
         setProductDetails(response)
         getReview(response.id)
         setLoader(false)

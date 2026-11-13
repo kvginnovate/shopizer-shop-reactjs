@@ -21,13 +21,13 @@ export const addToCart = (item, addToast, cartId, quantityCount, defaultStore, u
       let param;
       let response;
       let message;
-      console.log('Item ' + item.sku + " quantity " + quantityCount);
+      
       if (selectedProductOptions !== undefined) {
         param = { "attributes": selectedProductOptions, "product": item.sku, "quantity": quantityCount }
       } else {
         param = { "product": item.sku, "quantity": quantityCount }
       }
-      console.log('Cart parameters ' + JSON.stringify(param));
+      
       if (cartId) {
         message = "Updated Cart"
         action = constant.ACTION.CART + cartId + '?store=' + window._env_.APP_MERCHANT;
@@ -89,7 +89,7 @@ export const getCart = (cartID, userData) => {
       });
 
     } catch (error) {
-      console.log('Cart action response ' + error);
+      
       dispatch(deleteAllFromCart())
     }
   }

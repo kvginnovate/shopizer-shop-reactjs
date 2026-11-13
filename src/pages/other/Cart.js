@@ -114,7 +114,6 @@ const Cart = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   useEffect(() => {
-    console.log(cartCount)
     async function fetchData() {
       let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
       try {
@@ -122,11 +121,6 @@ const Cart = ({
         if (response) {
           setCartItems(response)
         }
-      } catch (error) {
-        console.log(error, 'jaimin')
-        setTimeout(() => {
-          history.push('/')
-        }, 200);
       }
     }
     fetchData();
@@ -145,10 +139,7 @@ const Cart = ({
       setLoader(false)
     } catch (error) {
       setLoader(false)
-      setTimeout(() => {
-        history.push('/')
-      }, 200);
-
+      setCartItems({ products: [], total: 0 })
     }
   }
   const deleteAllFromCart = () => {

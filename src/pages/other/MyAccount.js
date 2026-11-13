@@ -631,7 +631,7 @@ const MyAccount = ({ language, setUser, deleteAllFromCart, merchant, strings, lo
     }
   }
   const onDeleteConfirm = () => {
-    console.log('confrim')
+    
     setIsDeleted(!isDeleted)
   }
   const onDelete = async () => {

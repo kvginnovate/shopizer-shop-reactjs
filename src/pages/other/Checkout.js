@@ -279,7 +279,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
 
   const getSummaryOrder = async () => {
     setLoader(true)
-    console.log('GET SUMMARY')
+    
     let action = constant.ACTION.CART + cartID + '?store=' + defaultStore;
     try {
       let response = await WebService.get(action);
@@ -691,7 +691,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
       //execute
 
        
-       console.log('Required fields '+ JSON.stringify(param));
+       
        unity(p);
   
     } else {
@@ -714,7 +714,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
                 var millisecondsToWait = 5000;
                 setTimeout(function() {
                     // Whatever you want to do after the wait
-                    console.log('Into execution');
+                    ;
 
 
                     executed = false;
@@ -726,7 +726,7 @@ const Checkout = ({shipStateData, isLoading, currentLanguageCode, merchant, stri
             var millisecondsToWait = 5000;
             setTimeout(function() {
                 // Whatever you want to do after the wait
-                console.log('Into execution');
+                ;
                 executed = false;
             }, millisecondsToWait);
             // do something
