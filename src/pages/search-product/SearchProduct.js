@@ -48,9 +48,17 @@ const SearchProduct = ({ strings, location, defaultStore, currentLanguageCode, s
             if (response) {
                 // console.log(response)
                 // console.log(response.categoryFacets)
-                setProductData(response.products);
-                setTotalProduct(response.productCount);
-                setSubCategory(response.categoryFacets)
+                if (response.productCount > 0) {
+                    setProductData(response.products);
+                    setTotalProduct(response.productCount);
+                    setSubCategory(response.categoryFacets)
+                } else {
+                    let fallback = await WebService.get(constant.ACTION.PRODUCTS + '?store=' + (defaultStore || 'DEFAULT') + '&lang=' + currentLanguageCode + '&page=0&count=15');
+                    if (fallback && fallback.products) {
+                        setProductData(fallback.products);
+                        setTotalProduct(fallback.recordsTotal || fallback.products.length);
+                    }
+                }
             }
             setLoader(false)
         } catch (error) {
