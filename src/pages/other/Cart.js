@@ -533,7 +533,7 @@ function defaultImage(product) {
   } else if (product.image != null) {
     return product.imageUrl;
   } else {
-    return null;
+    return 'https://via.placeholder.com/80x80?text=No+Image';
   }
 }
 
