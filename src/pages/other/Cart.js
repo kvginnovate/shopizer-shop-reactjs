@@ -121,6 +121,9 @@ const Cart = ({
         if (response) {
           setCartItems(response)
         }
+      } catch (error) {
+        setLoader(false)
+        setCartItems({ products: [], total: 0 })
       }
     }
     fetchData();
